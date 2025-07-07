@@ -1,22 +1,17 @@
 {
   "private": true,
   "name": "comment-nuke",
-  "version": "0.11.17",
+  "version": "0.11.18",
   "license": "BSD-3-Clause",
   "type": "module",
   "dependencies": {
-    "@devvit/public-api": "0.11.17",
-    "devvit": "0.11.17"
+    "@devvit/public-api": "0.11.18",
+    "devvit": "0.11.18"
   },
   "scripts": {
-    "check": "npm run type-check && npm run lint:fix && npm run prettier",
-    "deploy": "devvit upload",
-    "dev": "devvit playtest axolotl_playground",
-    "lint": "eslint ./src",
-    "lint:fix": "eslint --fix ./src",
-    "login": "devvit login --copy-paste",
-    "prettier": "prettier-package-json --write ./package.json && prettier --write .",
-    "type-check": "tsc --build"
+    "deploy": "export DEVVIT_SUBREDDIT=axolotl_playground && devvit upload",
+    "dev": "devvit playtest",
+    "login": "devvit login --copy-paste"
   },
   "devDependencies": {
     "typescript": "5.8.3"
