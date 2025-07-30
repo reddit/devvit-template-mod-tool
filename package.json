@@ -4,16 +4,19 @@
   "version": "0.11.18",
   "license": "BSD-3-Clause",
   "type": "module",
-  "dependencies": {
-    "@devvit/public-api": "0.11.18",
-    "devvit": "0.11.18"
-  },
   "scripts": {
-    "deploy": "export DEVVIT_SUBREDDIT=axolotl_playground && devvit upload",
-    "dev": "devvit playtest",
-    "login": "devvit login --copy-paste"
+    "deploy": "devvit upload",
+    "dev": "dotenv -e .env -- devvit playtest",
+    "login": "devvit login",
+    "launch": "devvit publish",
+    "type-check": "tsc --build"
+  },
+  "dependencies": {
+    "@devvit/public-api": "0.11.20-next-2025-07-29-16-15-52-551cd5a95.0"
   },
   "devDependencies": {
+    "devvit": "0.11.20-next-2025-07-29-16-15-52-551cd5a95.0",
+    "dotenv-cli": "8.0.0",
     "typescript": "5.8.3"
   }
 }
