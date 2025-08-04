@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "deploy": "devvit upload",
-    "dev": "dotenv -e .env -- devvit playtest",
+    "dev": "npx devvit@next init && dotenv -e .env -- devvit playtest",
     "login": "devvit login",
     "launch": "devvit publish",
     "type-check": "tsc --build"
