@@ -1,6 +1,10 @@
 # Getting started with <% name %>
 
-Your project has been created using a Devvit template.
+A starter to build mod tools on Reddit's developer platform
+
+- [Devvit](https://developers.reddit.com/): A way to build and deploy powerful tools on Reddit
+- [Express](https://expressjs.com/): For backend logic
+- [Typescript](https://www.typescriptlang.org/): For type safety
 
 ## Next up
 

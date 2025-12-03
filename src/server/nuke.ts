@@ -1,10 +1,11 @@
-import { Comment, Devvit, Post } from "@devvit/public-api";
+import { reddit, Comment, Post } from "@devvit/web/server";
+import { T1, T3 } from "@devvit/web/shared";
 
 export type NukeProps = {
   remove: boolean;
   lock: boolean;
   skipDistinguished: boolean; // When true, distinguished comments and their children are not processed
-  commentId: string;
+  commentId: T1;
   subredditId: string;
 };
 
@@ -12,7 +13,7 @@ export type NukePostProps = {
   remove: boolean;
   lock: boolean;
   skipDistinguished: boolean; // When true, distinguished comments and their children are not processed
-  postId: string;
+  postId: T3;
   subredditId: string;
 };
 
@@ -42,10 +43,7 @@ async function* getAllCommentsInPost(
   }
 }
 
-export async function handleNukePost(
-  props: NukePostProps,
-  context: Devvit.Context
-) {
+export async function handleNukePost(props: NukePostProps) {
   const startTime = Date.now();
   let success = true;
   let message: string;
@@ -56,8 +54,8 @@ export async function handleNukePost(
 
   try {
     const [user, post] = await Promise.all([
-      context.reddit.getCurrentUser(),
-      context.reddit.getPostById(props.postId),
+      reddit.getCurrentUser(),
+      reddit.getPostById(props.postId),
     ]);
 
     if (!user) {
@@ -115,22 +113,6 @@ export async function handleNukePost(
         ? "locked"
         : "removed";
 
-    if (shouldRemove) {
-      try {
-        await context.modLog.add({
-          action: "removecomment",
-          target: props.postId,
-          details: "comment-mop app",
-          description: `u/${user.username} used comment-mop to ${verbage} all comments of this post.`,
-        });
-      } catch (e: unknown) {
-        console.error(
-          `Failed to add modlog for post: ${props.postId}.`,
-          (e as Error).message
-        );
-      }
-    }
-
     success = true;
     message = `Comments ${verbage}! Refresh the page to see the cleanup.`;
     const finishTime = Date.now();
@@ -147,7 +129,7 @@ export async function handleNukePost(
   return { success, message };
 }
 
-export async function handleNuke(props: NukeProps, context: Devvit.Context) {
+export async function handleNuke(props: NukeProps) {
   const startTime = Date.now();
   let success = true;
   let message: string;
@@ -157,8 +139,8 @@ export async function handleNuke(props: NukeProps, context: Devvit.Context) {
   const skipDistinguished = props.skipDistinguished;
 
   try {
-    const comment = await context.reddit.getCommentById(props.commentId);
-    const user = await context.reddit.getCurrentUser();
+    const comment = await reddit.getCommentById(props.commentId);
+    const user = await reddit.getCurrentUser();
 
     if (!user) {
       return { success: false, message: "Can't get user" };
@@ -214,22 +196,6 @@ export async function handleNuke(props: NukeProps, context: Devvit.Context) {
         : shouldLock
         ? "locked"
         : "removed";
-
-    if (shouldRemove) {
-      try {
-        await context.modLog.add({
-          action: "removecomment",
-          target: props.commentId,
-          details: "comment-mop app",
-          description: `u/${user.username} used comment-mop to ${verbage} this comment and all child comments.`,
-        });
-      } catch (e: unknown) {
-        console.error(
-          `Failed to add modlog for comment: ${props.commentId}.`,
-          (e as Error).message
-        );
-      }
-    }
 
     success = true;
     message = `Comments ${verbage}! Refresh the page to see the cleanup.`;

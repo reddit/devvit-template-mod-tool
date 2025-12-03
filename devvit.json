@@ -1,0 +1,35 @@
+{
+  "$schema": "https://developers.reddit.com/schema/config-file.v1.json",
+  "name": "<% name %>",
+  "server": {
+    "dir": "dist/server",
+    "entry": "main.cjs"
+  },
+  "permissions": {
+    "reddit": {
+      "enable": true
+    }
+  },
+  "menu": {
+    "items": [
+      {
+        "label": "Mop comments",
+        "description": "Remove this comment and all child comments. This might take a few seconds to run.",
+        "location": "comment",
+        "endpoint": "/internal/menu/mop-comments",
+        "forUserType": "moderator"
+      },
+      {
+        "label": "Mop post comments",
+        "endpoint": "/internal/menu/mop-post-comments",
+        "description": "Remove all comments of this post. This might take a few seconds to run.",
+        "location": "post",
+        "forUserType": "moderator"
+      }
+    ]
+  },
+  "forms": {
+    "nukeForm": "/internal/forms/nuke",
+    "nukePostForm": "/internal/forms/nuke-post"
+  }
+}

@@ -1,22 +1,27 @@
 {
   "private": true,
-  "name": "comment-nuke",
+  "name": "<% name %>",
   "version": "0.11.18",
   "license": "BSD-3-Clause",
   "type": "module",
   "scripts": {
-    "deploy": "devvit upload",
-    "dev": "dotenv -e .env -- devvit playtest",
+    "build": "pushd src/server && vite build && popd",
+    "deploy": "npm run build && devvit upload",
+    "dev": "npm run build && dotenv -e .env -- devvit playtest",
     "login": "devvit login",
-    "launch": "devvit publish",
+    "launch": "npm run build && devvit publish",
     "type-check": "tsc --build"
   },
-  "dependencies": {
-    "@devvit/public-api": "0.12.2"
-  },
   "devDependencies": {
-    "devvit": "0.12.2",
+    "@types/express": "^5.0.6",
+    "devvit": "0.12.5",
     "dotenv-cli": "8.0.0",
-    "typescript": "5.8.3"
+    "typescript": "5.8.3",
+    "vite": "6.2.4",
+    "vitest": "^4.0.15"
+  },
+  "dependencies": {
+    "@devvit/web": "0.12.5",
+    "express": "^5.2.1"
   }
 }

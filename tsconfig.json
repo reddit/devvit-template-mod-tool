@@ -1,3 +1,6 @@
 {
-  "extends": "@devvit/public-api/devvit.tsconfig.json"
+  "files": [ ],
+  "references": [
+    { "path": "./src/server" }
+  ]
 }
